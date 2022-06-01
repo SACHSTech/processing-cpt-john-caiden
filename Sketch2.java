@@ -31,14 +31,8 @@ public class Sketch2 extends PApplet {
 
 ///////////////////////////////
 
-  float ellipseX = 200;
-  float ellipseY = 200;
-
-  boolean upPressed = false;
-  boolean downPressed = false;
   boolean leftPressed = false;
   boolean rightPressed = false;  
-  boolean shiftPressed = false;
 
   /**
    * Called repeatedly, anything drawn to the screen goes here
@@ -76,8 +70,6 @@ public class Sketch2 extends PApplet {
   //draw the player rectangle
   rect(playerX, playerY, playerWidth, playerHeight);
 
-    // allow player movement
-    //ellipse(ellipseX, ellipseY, 50, 50);
     
     if (leftPressed){
       playerX -= 3;
