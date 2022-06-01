@@ -3,15 +3,6 @@ import processing.core.PImage;
 
 public class Sketch2 extends PApplet {
 	
-  PImage sonic_spritesheet;
-  PImage sonic_runningsheet;
-  PImage[] sonic_frames;
-  int intSonic_frames = 8;
-  int intSonic_frameWidth = 40;
-  int intSonic_frameHeight = 40;
-  int intSonicX = 20;
-  int intSonicY = 80;
-	
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
@@ -25,33 +16,104 @@ public class Sketch2 extends PApplet {
    * values here i.e background, stroke, fill etc.
    */
   public void setup() {
-
     background(0);
-
-    sonic_spritesheet = loadImage("Sonicsheet.png");
-    sonic_runningsheet = sonic_spritesheet.get(2,267, intSonic_frameWidth*intSonic_frames, intSonic_frameHeight );
-
-    sonic_frames = new PImage[intSonic_frames];
-    for(int frameNum = 0; frameNum < intSonic_frames; frameNum++ ){
-      System.out.println("load frames");
-      sonic_frames[frameNum] = sonic_runningsheet.get(intSonic_frameWidth*frameNum, 0, intSonic_frameWidth, intSonic_frameHeight );
-    }
   }
+
+  float groundY = 400;
+
+  float playerX = 140;
+  float playerY = 100;
+  float playerWidth = 20;
+  float playerHeight = 20;
+  float playerSpeedY = 0;
+
+  boolean jumping = false;
+
+///////////////////////////////
+
+  float ellipseX = 200;
+  float ellipseY = 200;
+
+  boolean upPressed = false;
+  boolean downPressed = false;
+  boolean leftPressed = false;
+  boolean rightPressed = false;  
+  boolean shiftPressed = false;
 
   /**
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
+    
+    // draw background
+    background(0, 0, 0);
 
-	  image(sonic_frames[(frameCount/3)%intSonic_frames], intSonicX, intSonicY);
-    intSonicX += 2;
+   //draw the ground
+  stroke(255);
+  line(0, groundY, width, groundY);
 
-    if(intSonicX > width){
-      intSonicX = 0 - intSonic_frameWidth;
+  //move the player
+  playerY += playerSpeedY;
+
+  //is the player colliding with the ground?
+  if (playerY + playerHeight > groundY) {
+
+    //snap the player's bottom to the ground's position
+    playerY = groundY - playerHeight;
+
+    //stop the player falling
+    playerSpeedY = 0;
+
+    //allow jumping again
+    jumping = false;
+  }
+  //player is not colliding with the ground
+  else {
+    //gravity accelerates the movement speed
+    playerSpeedY ++;
+  }
+
+  //draw the player rectangle
+  rect(playerX, playerY, playerWidth, playerHeight);
+
+    // allow player movement
+    //ellipse(ellipseX, ellipseY, 50, 50);
+    
+    if (leftPressed){
+      playerX -= 3;
     }
-    
-    
+    if (rightPressed){
+      playerX += 3;
+    }
+
+  }
+  public void keyPressed() {
+    if(key == 'w') {
+      if (!jumping) {
+      
+        //going up
+        playerSpeedY = -10;
+        
+        //disallow jumping while already jumping
+        jumping = true;
+      }
+    }
+
+    else if (key == 'a') {
+      leftPressed = true;
+    }
+    else if (key == 'd') {
+      rightPressed = true;
+    }
   }
   
-  // define other methods down here.
+  public void keyReleased() {
+    if (key == 'a') {
+      leftPressed = false;
+    }
+    if (key == 'd') {
+      rightPressed = false;
+    }
+  }
+
 }
