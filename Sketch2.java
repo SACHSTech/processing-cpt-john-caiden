@@ -8,8 +8,10 @@ public class Sketch2 extends PApplet {
    */
   public void settings() {
 	// put your size call here
-    size(400, 400);
+    size(700, 700);
   }
+
+  PImage img;
 
   /** 
    * Called once at the beginning of execution.  Add initial set up
@@ -17,9 +19,11 @@ public class Sketch2 extends PApplet {
    */
   public void setup() {
     background(0);
+    img = loadImage("Preview2_0.jpg");
   }
 
-  float groundY = 400;
+  float groundY = 700;
+  float groundY2 = 580;
 
   float playerX = 140;
   float playerY = 100;
@@ -39,12 +43,15 @@ public class Sketch2 extends PApplet {
    */
   public void draw() {
     
-    // draw background
-    background(0, 0, 0);
+  // load background
+  image(img, 0, 0);
+  img.resize(700, 700);
 
    //draw the ground
   stroke(255);
   line(0, groundY, width, groundY);
+
+  line(0, groundY2, 200, groundY2);
 
   //move the player
   playerY += playerSpeedY;
@@ -84,7 +91,7 @@ public class Sketch2 extends PApplet {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -10;
+        playerSpeedY = -15;
         
         //disallow jumping while already jumping
         jumping = true;
