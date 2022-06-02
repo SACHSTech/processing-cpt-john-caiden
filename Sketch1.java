@@ -33,7 +33,6 @@ public void setup() {
   // load the sonic Running Right from the spritesheet
   sonic_right = new PImage[intSonic_right];
   for(int frameNum = 0; frameNum < intSonic_right; frameNum++ ){
-    System.out.println("load frames");
     sonic_right[frameNum] = sonic_runningsheet.get(intSonic_frameWidth*frameNum, 0, intSonic_frameWidth, intSonic_frameHeight );
   }
 
@@ -44,16 +43,12 @@ public void draw() {
   // Background
   background(0, 0, 0);
 
-  // Draw Sonic to Screen
-   
-
+  // Draw Sonic to other side of the screen to 
   if(intSonicX > width){
     intSonicX = 0 - intSonic_frameWidth;
     }
 
-
-  
-    // Movement for Sonic
+  // Movement for Sonic
   if (dPressed) {
     intSonicX += 2;
     image(sonic_right[(frameCount/3)%intSonic_right], intSonicX, intSonicY);
@@ -64,10 +59,10 @@ public void draw() {
   }
 
   if (intSonicX == 0) {
-
+    // sonic standing spritesheet
   }
    
-}
+ }
 
 public void keyPressed() {
 if (key == 'd') {
