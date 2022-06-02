@@ -25,7 +25,7 @@ public class Sketch2 extends PApplet {
   float groundY = 700;
   float groundY2 = 580;
 
-  float playerX = 140;
+  float playerX = 230;
   float playerY = 100;
   float playerWidth = 20;
   float playerHeight = 20;
@@ -84,6 +84,17 @@ public class Sketch2 extends PApplet {
     if (rightPressed){
       playerX += 3;
     }
+ 
+    // Barriers for bottom left platform
+    if (playerX < 178 && playerY > 50) {
+      playerX = 179;
+    }
+
+    // this is the failed attempt part
+    if (playerX < 180 && playerY < 50) {
+      playerY = 50;
+      playerX = 20;
+    }
 
   }
   public void keyPressed() {
@@ -91,7 +102,7 @@ public class Sketch2 extends PApplet {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -15;
+        playerSpeedY = -17;
         
         //disallow jumping while already jumping
         jumping = true;
@@ -113,6 +124,10 @@ public class Sketch2 extends PApplet {
     if (key == 'd') {
       rightPressed = false;
     }
+  }
+
+  public void barriers() {
+
   }
 
 }
