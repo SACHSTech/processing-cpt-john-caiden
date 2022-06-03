@@ -3,6 +3,28 @@ import processing.core.PImage;
 
 public class Sketch2 extends PApplet {
 	
+ // background image variable
+ PImage img;
+
+ // platform hitboxes
+ float groundY = 700;
+ float groundY1 = 580;
+ 
+ // player coordinates and hitbox
+ float playerX = 140;
+ float playerY = 100;
+ float playerWidth = 20;
+ float playerHeight = 20;
+ float playerSpeedX = 3;
+ float playerSpeedY;
+ 
+ // boolean to check when the player is jumping
+ boolean jumping = false;
+ 
+ // boolean which allows horizontal movement
+ boolean leftPressed = false;
+ boolean rightPressed = false;  
+
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
@@ -10,8 +32,6 @@ public class Sketch2 extends PApplet {
 	// put your size call here
     size(700, 700);
   }
-
-  PImage img;
 
   /** 
    * Called once at the beginning of execution.  Add initial set up
@@ -22,22 +42,6 @@ public class Sketch2 extends PApplet {
     img = loadImage("Preview2_0.jpg");
   }
 
-  float groundY = 700;
-  float groundY2 = 580;
-
-  float playerX = 140;
-  float playerY = 100;
-  float playerWidth = 20;
-  float playerHeight = 20;
-  float playerSpeedY = 0;
-
-  boolean jumping = false;
-
-///////////////////////////////
-
-  boolean leftPressed = false;
-  boolean rightPressed = false;  
-
   /**
    * Called repeatedly, anything drawn to the screen goes here
    */
@@ -47,16 +51,17 @@ public class Sketch2 extends PApplet {
   image(img, 0, 0);
   img.resize(700, 700);
 
-   //draw the ground
+  //draw the ground
   stroke(255);
   line(0, groundY, width, groundY);
 
-  line(0, groundY2, 200, groundY2);
+  // draw first platform
+  line(0, groundY1, 180, groundY1);
 
-  //move the player
+  // player always has a downward force acting upon them
   playerY += playerSpeedY;
 
-  //is the player colliding with the ground?
+  // if the player is above the ground
   if (playerY + playerHeight > groundY) {
 
     //snap the player's bottom to the ground's position
@@ -74,30 +79,61 @@ public class Sketch2 extends PApplet {
     playerSpeedY ++;
   }
 
+  if (playerY + playerHeight > groundY1 && playerX < 175) {
+
+    //snap the player's bottom to the ground's position
+    playerY = groundY1 - playerHeight;
+
+    //stop the player falling
+    playerSpeedY = 0;
+
+    //player is not colliding with the ground
+    playerY = groundY - playerHeight;
+
+    //allow jumping again
+    jumping = false;
+  }
+  else {
+    playerSpeedY ++;
+  }
+
   //draw the player rectangle
   rect(playerX, playerY, playerWidth, playerHeight);
 
-    
+    // horizontal player movement
     if (leftPressed){
-      playerX -= 3;
+      if (playerX < 0) {
+        playerX -= 0;
+      }
+      else {
+        playerX -= playerSpeedX;
+      }
     }
+
     if (rightPressed){
-      playerX += 3;
+      if (playerX > 675) {
+        playerX += 0;
+      }
+      else {
+        playerX += playerSpeedX;
+      }
     }
 
   }
   public void keyPressed() {
+    // allow player to jump
     if(key == 'w') {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -15;
+        playerSpeedY = -17;
         
         //disallow jumping while already jumping
         jumping = true;
       }
     }
 
+    // allow for horizontal player movement
     else if (key == 'a') {
       leftPressed = true;
     }
