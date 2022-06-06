@@ -105,6 +105,9 @@ public class Sketch2 extends PApplet {
       if (playerX < 0) {
         playerX -= 0;
       }
+      else if (playerX < 0 && playerY + playerHeight > groundY1) {
+        
+      }
       else {
         playerX -= playerSpeedX;
       }
@@ -126,7 +129,7 @@ public class Sketch2 extends PApplet {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -17;
+        playerSpeedY = -20;
         
         //disallow jumping while already jumping
         jumping = true;
