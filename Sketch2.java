@@ -79,7 +79,7 @@ public class Sketch2 extends PApplet {
     playerSpeedY ++;
   }
 
-  if (playerY + playerHeight > groundY1 && playerX < 175) {
+  /*if (playerY + playerHeight > groundY1 && playerX < 175) {
 
     //snap the player's bottom to the ground's position
     playerY = groundY1 - playerHeight;
@@ -95,33 +95,54 @@ public class Sketch2 extends PApplet {
   }
   else {
     playerSpeedY ++;
-  }
+  }*/
+    if (playerY < groundY1 && playerX < 180) {
+      //snap the player's bottom to the ground's position
+      playerY = groundY1 - playerHeight;
 
-  //draw the player rectangle
-  rect(playerX, playerY, playerWidth, playerHeight);
+      if (playerY + playerHeight > groundY1)
+      //stop the player falling
+      playerSpeedY = 0;
+      
+      if(key == 'w') {
+        if (!jumping) {
+        
+          //going up
+          playerSpeedY = -15;
+          
+          //disallow jumping while already jumping
+          jumping = true;
+        }
+      }
+    }
+      
+      /*else if (playerX < 178 && playerY + playerHeight > groundY1) {
+        //snap the player's bottom to the ground's position
+        playerY = groundY1 - playerHeight;
 
-    // horizontal player movement
+        //stop the player falling
+        playerSpeedY = 0;
+
+        //player is not colliding with the ground
+        playerY = groundY - playerHeight;
+
+        //allow jumping again
+        jumping = false;
+      }
+      else {
+        playerX -= 0;
+      }
+*/
+
+    //draw the player rectangle
+    rect(playerX, playerY, playerWidth, playerHeight);
+
     if (leftPressed){
-<<<<<<< HEAD
-      playerX -= 3;
-    }
-    if (rightPressed){
-      playerX += 3;
-    }
- 
-    // Barriers for bottom left platform
-    if (playerX < 178 && playerY > 100) {
-      leftPressed = false;
-
-    }
-
-
-=======
       if (playerX < 0) {
         playerX -= 0;
       }
-      else if (playerX < 0 && playerY + playerHeight > groundY1) {
-        
+      else if (playerX < 180 && playerY > groundY1) {
+        playerX -= 0;
       }
       else {
         playerX -= playerSpeedX;
@@ -136,16 +157,15 @@ public class Sketch2 extends PApplet {
         playerX += playerSpeedX;
       }
     }
->>>>>>> 4684f3ffc10340d35da268580eb324fe0d05b06c
-
   }
+  
   public void keyPressed() {
     // allow player to jump
     if(key == 'w') {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -20;
+        playerSpeedY = -15;
         
         //disallow jumping while already jumping
         jumping = true;
