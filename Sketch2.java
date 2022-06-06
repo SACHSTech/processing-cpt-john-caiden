@@ -102,6 +102,21 @@ public class Sketch2 extends PApplet {
 
     // horizontal player movement
     if (leftPressed){
+<<<<<<< HEAD
+      playerX -= 3;
+    }
+    if (rightPressed){
+      playerX += 3;
+    }
+ 
+    // Barriers for bottom left platform
+    if (playerX < 178 && playerY > 100) {
+      leftPressed = false;
+
+    }
+
+
+=======
       if (playerX < 0) {
         playerX -= 0;
       }
@@ -121,6 +136,7 @@ public class Sketch2 extends PApplet {
         playerX += playerSpeedX;
       }
     }
+>>>>>>> 4684f3ffc10340d35da268580eb324fe0d05b06c
 
   }
   public void keyPressed() {
