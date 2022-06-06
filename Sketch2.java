@@ -86,15 +86,12 @@ public class Sketch2 extends PApplet {
     }
  
     // Barriers for bottom left platform
-    if (playerX < 178 && playerY > 50) {
-      playerX = 179;
+    if (playerX < 178 && playerY > 100) {
+      leftPressed = false;
+
     }
 
-    // this is the failed attempt part
-    if (playerX < 180 && playerY < 50) {
-      playerY = 50;
-      playerX = 20;
-    }
+
 
   }
   public void keyPressed() {
