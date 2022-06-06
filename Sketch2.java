@@ -100,20 +100,11 @@ public class Sketch2 extends PApplet {
       //snap the player's bottom to the ground's position
       playerY = groundY1 - playerHeight;
 
-      if (playerY + playerHeight > groundY1)
+      if (playerY + playerHeight < groundY1){
       //stop the player falling
       playerSpeedY = 0;
-      
-      if(key == 'w') {
-        if (!jumping) {
-        
-          //going up
-          playerSpeedY = -15;
-          
-          //disallow jumping while already jumping
-          jumping = true;
-        }
       }
+      
     }
       
       /*else if (playerX < 178 && playerY + playerHeight > groundY1) {
