@@ -9,7 +9,9 @@ public class Sketch2 extends PApplet {
  // platform hitboxes
  float groundY = 700;
  float groundY1 = 580;
- 
+ float groundY2 = 520;
+ float groundY3 = 580;
+
  // player coordinates and hitbox
  float playerX = 140;
  float playerY = 100;
@@ -42,114 +44,6 @@ public class Sketch2 extends PApplet {
     img = loadImage("Preview2_0.jpg");
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
-  public void draw() {
-    
-  // load background
-  image(img, 0, 0);
-  img.resize(700, 700);
-
-  //draw the ground
-  stroke(255);
-  line(0, groundY, width, groundY);
-
-  // draw first platform
-  line(0, groundY1, 180, groundY1);
-
-  // player always has a downward force acting upon them
-  playerY += playerSpeedY;
-
-  // if the player is above the ground
-  if (playerY + playerHeight > groundY) {
-
-    //snap the player's bottom to the ground's position
-    playerY = groundY - playerHeight;
-
-    //stop the player falling
-    playerSpeedY = 0;
-
-    //allow jumping again
-    jumping = false;
-  }
-  //player is not colliding with the ground
-  else {
-    //gravity accelerates the movement speed
-    playerSpeedY ++;
-  }
-
-  /*if (playerY + playerHeight > groundY1 && playerX < 175) {
-
-    //snap the player's bottom to the ground's position
-    playerY = groundY1 - playerHeight;
-
-    //stop the player falling
-    playerSpeedY = 0;
-
-    //player is not colliding with the ground
-    playerY = groundY - playerHeight;
-
-    //allow jumping again
-    jumping = false;
-  }
-  else {
-    playerSpeedY ++;
-  }*/
-    if (playerY < groundY1 && playerX < 180) {
-      //snap the player's bottom to the ground's position
-      playerY = groundY1 - playerHeight;
-
-      if (playerY + playerHeight < groundY1){
-      //stop the player falling
-      playerSpeedY = 0;
-      }
-      
-    }
-      
-      /*else if (playerX < 178 && playerY + playerHeight > groundY1) {
-        //snap the player's bottom to the ground's position
-        playerY = groundY1 - playerHeight;
-
-        //stop the player falling
-        playerSpeedY = 0;
-
-        //player is not colliding with the ground
-        playerY = groundY - playerHeight;
-
-        //allow jumping again
-        jumping = false;
-      }
-      else {
-        playerX -= 0;
-      }
-*/
-
-    //draw the player rectangle
-    rect(playerX, playerY, playerWidth, playerHeight);
-
-    if (leftPressed){
-      if (playerX < 0) {
-        playerX -= 0;
-      }
-      else if (playerX < 180 && playerY > groundY1) {
-        playerX -= 0;
-      }
-      else {
-        playerX -= playerSpeedX;
-      }
-    }
-
-    if (rightPressed){
-      if (playerX > 675) {
-        playerX += 0;
-      }
-      else {
-        playerX += playerSpeedX;
-      }
-    }
-  }
-  
   public void keyPressed() {
     // allow player to jump
     if(key == 'w') {
@@ -178,6 +72,110 @@ public class Sketch2 extends PApplet {
     }
     if (key == 'd') {
       rightPressed = false;
+    }
+  }
+
+  /**
+   * Called repeatedly, anything drawn to the screen goes here
+   */
+  public void draw() {
+    
+  // load background
+  image(img, 0, 0);
+  img.resize(700, 700);
+
+  //draw the ground
+  stroke(255);
+  line(0, groundY, width, groundY);
+
+  // draw first platform
+  line(0, groundY1, 180, groundY1);
+
+  // draw second platform
+  line(270, groundY2, 535, groundY2);
+
+  // draw third platform
+  line(535, groundY3, 620, groundY3);
+
+  // player always has a downward force acting upon them
+  playerY += playerSpeedY;
+
+  // if the player is above the ground
+  if (playerY + playerHeight > groundY) {
+
+    //snap the player's bottom to the ground's position
+    playerY = groundY - playerHeight;
+
+    //stop the player falling
+    playerSpeedY = 0;
+
+    //allow jumping again
+    jumping = false;
+  }
+  else if (playerY + playerHeight > groundY1 && playerX < 170) {
+    //snap the player's bottom to the ground's position
+    playerY = groundY1 - playerHeight;
+
+    //stop the player falling
+    playerSpeedY = 0;
+    
+    //allow jumping again
+    jumping = false;
+  }
+  else if (playerY + playerHeight > groundY2 && playerX > 260 && playerX < 525){
+    //snap the player's bottom to the ground's position
+    playerY = groundY2 - playerHeight;
+
+    //stop the player falling
+    playerSpeedY = 0;
+    
+    //allow jumping again
+    jumping = false;
+  }
+  else if (playerY + playerHeight > groundY2 && playerX > 525 && playerX < 610){
+    //snap the player's bottom to the ground's position
+    playerY = groundY3 - playerHeight;
+
+    //stop the player falling
+    playerSpeedY = 0;
+    
+    //allow jumping again
+    jumping = false;
+  }
+  //player is not colliding with the ground
+  else {
+    //gravity accelerates the movement speed
+    playerSpeedY ++;
+  }
+
+    //draw the player rectangle
+    rect(playerX, playerY, playerWidth, playerHeight);
+
+    if (leftPressed){
+      if (playerX < 0) {
+        playerX -= 0;
+      }
+      else if (playerX < 180 && playerY > groundY1) {
+        playerX -= 0;
+      }
+      else if (playerX < 545 && playerX > 270 && playerY > groundY2) {
+        playerX -= 0;
+      }
+      else {
+        playerX -= playerSpeedX;
+      }
+    }
+
+    if (rightPressed){
+      if (playerX > 675) {
+        playerX += 0;
+      }
+      else if (playerX > 250 && playerX < 535 && playerY > groundY2) {
+        playerX += 0;
+      }
+      else {
+        playerX += playerSpeedX;
+      }
     }
   }
 
