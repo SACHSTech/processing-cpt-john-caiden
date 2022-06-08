@@ -11,6 +11,7 @@ public class Sketch2 extends PApplet {
  float groundY1 = 580;
  float groundY2 = 520;
  float groundY3 = 580;
+ float groundY4 = 365;
 
  // player coordinates and hitbox
  float playerX = 140;
@@ -50,7 +51,7 @@ public class Sketch2 extends PApplet {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -15;
+        playerSpeedY = -20;
         
         //disallow jumping while already jumping
         jumping = true;
@@ -97,6 +98,9 @@ public class Sketch2 extends PApplet {
   // draw third platform
   line(535, groundY3, 620, groundY3);
 
+  // draw fourth platform
+  line(102, groundY4, 233, groundY4);
+
   // player always has a downward force acting upon them
   playerY += playerSpeedY;
 
@@ -142,6 +146,13 @@ public class Sketch2 extends PApplet {
     //allow jumping again
     jumping = false;
   }
+  else if (playerY + playerHeight > groundY4 && playerX > 102 && playerX < 233) {
+    playerY = groundY4 - playerHeight;
+
+    playerSpeedY = 0;
+    jumping = false;
+  }
+
   //player is not colliding with the ground
   else {
     //gravity accelerates the movement speed
