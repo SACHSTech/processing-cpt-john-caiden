@@ -4,11 +4,14 @@ import processing.core.PImage;
 public class Sketch1 extends PApplet {
     
 // Importing Images
+PImage Sonicfall;
+
 PImage sonic_spritesheet;
 
 PImage sonic_rightsheet;
 PImage sonic_leftsheet;
 PImage sonic_stillsheet;
+PImage sonic_jumpsheet;
 
 PImage[] sonic_right;
 PImage[] sonic_left;
@@ -25,6 +28,9 @@ int intSonicY;
 boolean dPressed = false;
 boolean aPressed = false;
 
+// test variable for sketch 2
+boolean jumping = true;
+
 public void settings() {
 // put your size call here
   size(400, 400);
@@ -34,17 +40,21 @@ public void settings() {
 public void setup() {
   background(210, 255, 173);
 
-  // load sonic runnning right spritesheet
-  sonic_spritesheet = loadImage("Sonicsheet right.png");
-  sonic_rightsheet = sonic_spritesheet.get(2,267, intSonic_frameWidth*intSonic_right, intSonic_frameHeight);
-
   // load sonic standing still spritesheet
   sonic_spritesheet = loadImage("Sonicsheet right.png");
   sonic_stillsheet = sonic_spritesheet.get(222, 816, intSonic_frameWidth*intSonic_right, intSonic_frameHeight);
 
+  // load sonic runnning right spritesheet
+  sonic_spritesheet = loadImage("Sonicsheet right.png");
+  sonic_rightsheet = sonic_spritesheet.get(2,267, intSonic_frameWidth*intSonic_right, intSonic_frameHeight);
+
   // load sonic running left spritesheet
   sonic_spritesheet = loadImage("Sonicsheet left.png");
   sonic_leftsheet = sonic_spritesheet.get(244, 267, intSonic_frameWidth*intSonic_left, intSonic_frameHeight);
+
+  // load sonic jumping/falling spritesheet
+  sonic_spritesheet = loadImage("Sonicsheet right.png");
+  sonic_jumpsheet = sonic_spritesheet.get(520, 750, intSonic_frameWidth, intSonic_frameHeight);
 
   // load the sonic running right from the spritesheet
   sonic_right = new PImage[intSonic_right];
@@ -75,7 +85,12 @@ public void draw() {
     }
 
   // Movement for Sonic
-  if (dPressed) {
+  if (jumping = true) {
+    Sonicfall = loadImage("Sonicfall.png");
+    Sonicfall.resize(40, 50);
+    image(Sonicfall, intSonicX, intSonicY);
+  }
+  else if (dPressed) {
     intSonicX += 2;
     image(sonic_right[(frameCount/3)%intSonic_right], intSonicX, intSonicY);
    } 
