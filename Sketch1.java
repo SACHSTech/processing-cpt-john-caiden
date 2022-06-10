@@ -80,11 +80,11 @@ public void draw() {
     }
 
   // Movement for Sonic
-  /*if (jumping = true) {
+  if (jumping = true) {
     Sonicfall = loadImage("Sonicfall.png");
     Sonicfall.resize(30, 40);
     image(Sonicfall, intSonicX, intSonicY);
-  }*/
+  }
   else if (dPressed) {
     intSonicX += 2;
     image(sonic_right[(frameCount/3)%intSonic_right], intSonicX, intSonicY);
@@ -94,10 +94,7 @@ public void draw() {
     image(sonic_left[(frameCount/3)%intSonic_left], intSonicX, intSonicY);
   }
   else {
-    Sonicfall = loadImage("Sonicfall.png");
-    Sonicfall.resize(30, 40);
-    image(Sonicfall, intSonicX, intSonicY);
-    //image(sonic_still[(frameCount/10)%intSonic_still], intSonicX, intSonicY);
+    image(sonic_still[(frameCount/10)%intSonic_still], intSonicX, intSonicY);
   }
    
  }
