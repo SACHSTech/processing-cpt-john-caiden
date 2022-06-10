@@ -54,7 +54,7 @@ public class Sketch2 extends PApplet {
       if (!jumping) {
       
         //going up
-        playerSpeedY = -20;
+        playerSpeedY = -18;
         
         //disallow jumping while already jumping
         jumping = true;
@@ -148,7 +148,7 @@ public class Sketch2 extends PApplet {
     //allow jumping again
     jumping = false;
   }
-  else if (playerY + playerHeight > groundY2 && playerX > 525 && playerX < 610){
+  else if (playerY + playerHeight > groundY3 && playerX > 525 && playerX < 610){
     //snap the player's bottom to the ground's position
     playerY = groundY3 - playerHeight;
 
@@ -159,14 +159,14 @@ public class Sketch2 extends PApplet {
     jumping = false;
   }
   
-  else if (playerY + playerHeight > groundY4 && playerX > 85 && playerX < 233) {
+  else if (playerY + playerHeight > groundY4 && playerY + playerHeight < 400 && playerX > 85 && playerX < 233) {
     playerY = groundY4 - playerHeight;
 
     playerSpeedY = 0;
     jumping = false;
   }
 
-  else if (playerY + playerHeight > groundY5 && playerX > 243 && playerX < 354) {
+  else if (playerY + playerHeight < groundY5 && playerX > 243 && playerX < 354) {
     playerY = groundY5 - playerHeight;
 
     playerSpeedY = 0;

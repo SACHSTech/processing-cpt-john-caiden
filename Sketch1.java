@@ -85,7 +85,7 @@ public void draw() {
     Sonicfall.resize(30, 40);
     image(Sonicfall, intSonicX, intSonicY);
   }*/
-  /*else*/ if (dPressed) {
+  else if (dPressed) {
     intSonicX += 2;
     image(sonic_right[(frameCount/3)%intSonic_right], intSonicX, intSonicY);
    } 
