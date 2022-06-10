@@ -15,6 +15,7 @@ public class Sketch2 extends PApplet {
  float groundY5 = 238;
  float groundY6 = 164;
  float groundY7 = 139;
+ float groundY8 = 135;
 
  // player coordinates and hitbox
  float playerX = 140;
@@ -113,6 +114,10 @@ public class Sketch2 extends PApplet {
   //draw seventh platform
   line(568, groundY7, 700, groundY7);
 
+  // draw eighth platform
+  // changed groundY7 value to 134 because background platform is slanted
+  line(0, groundY8, 176, 134);
+
   // player always has a downward force acting upon them
   playerY += playerSpeedY;
 
@@ -148,7 +153,7 @@ public class Sketch2 extends PApplet {
     //allow jumping again
     jumping = false;
   }
-  else if (playerY + playerHeight > groundY3 && playerX > 525 && playerX < 610){
+  else if (playerY + playerHeight > groundY3 && playerY + playerHeight < 600 && playerX > 526 && playerX < 610){
     //snap the player's bottom to the ground's position
     playerY = groundY3 - playerHeight;
 
@@ -159,29 +164,36 @@ public class Sketch2 extends PApplet {
     jumping = false;
   }
   
-  else if (playerY + playerHeight > groundY4 && playerY + playerHeight < 400 && playerX > 85 && playerX < 233) {
+  else if (playerY + playerHeight > groundY4 && playerY + playerHeight < 390 && playerX > 85 && playerX < 233) {
     playerY = groundY4 - playerHeight;
 
     playerSpeedY = 0;
     jumping = false;
   }
 
-  else if (playerY + playerHeight < groundY5 && playerX > 243 && playerX < 354) {
+  else if (playerY + playerHeight > groundY5 && playerY + playerHeight < 260 && playerX > 243 && playerX < 354) {
     playerY = groundY5 - playerHeight;
 
     playerSpeedY = 0;
     jumping = false;
   }
 
-  else if (playerY + playerHeight > groundY6 && playerX > 396 && playerX < 480) {
+  else if (playerY + playerHeight > groundY6 && playerY + playerHeight < 190 && playerX > 396 && playerX < 480) {
     playerY = groundY6 - playerHeight;
 
     playerSpeedY = 0;
     jumping = false;
   }
 
-  else if (playerY + playerHeight > groundY7 && playerX > 568 && playerX < 700) {
+  else if (playerY + playerHeight > groundY7 && playerY + playerHeight < 150 && playerX > 545 && playerX < 700) {
     playerY = groundY7 - playerHeight;
+
+    playerSpeedY = 0;
+    jumping = false;
+  }
+
+  else if (playerY + playerHeight > groundY8 && playerY + playerHeight < 150 && playerX > 0 && playerX < 176) {
+    playerY = groundY8 - playerHeight;
 
     playerSpeedY = 0;
     jumping = false;
