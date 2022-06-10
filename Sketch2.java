@@ -194,6 +194,7 @@ public class Sketch2 extends PApplet {
   }
 
     //draw the player rectangle
+    fill(0, 0, 255);
     rect(playerX, playerY, playerWidth, playerHeight);
 
     if (leftPressed){

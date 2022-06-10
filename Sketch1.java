@@ -11,7 +11,6 @@ PImage sonic_spritesheet;
 PImage sonic_rightsheet;
 PImage sonic_leftsheet;
 PImage sonic_stillsheet;
-PImage sonic_jumpsheet;
 
 PImage[] sonic_right;
 PImage[] sonic_left;
@@ -52,10 +51,6 @@ public void setup() {
   sonic_spritesheet = loadImage("Sonicsheet left.png");
   sonic_leftsheet = sonic_spritesheet.get(244, 267, intSonic_frameWidth*intSonic_left, intSonic_frameHeight);
 
-  // load sonic jumping/falling spritesheet
-  sonic_spritesheet = loadImage("Sonicsheet right.png");
-  sonic_jumpsheet = sonic_spritesheet.get(520, 750, intSonic_frameWidth, intSonic_frameHeight);
-
   // load the sonic running right from the spritesheet
   sonic_right = new PImage[intSonic_right];
   for(int frameNum = 0; frameNum < intSonic_right; frameNum++ ){
@@ -85,12 +80,12 @@ public void draw() {
     }
 
   // Movement for Sonic
-  if (jumping = true) {
+  /*if (jumping = true) {
     Sonicfall = loadImage("Sonicfall.png");
-    Sonicfall.resize(40, 50);
+    Sonicfall.resize(30, 40);
     image(Sonicfall, intSonicX, intSonicY);
-  }
-  else if (dPressed) {
+  }*/
+  /*else*/ if (dPressed) {
     intSonicX += 2;
     image(sonic_right[(frameCount/3)%intSonic_right], intSonicX, intSonicY);
    } 
@@ -99,19 +94,22 @@ public void draw() {
     image(sonic_left[(frameCount/3)%intSonic_left], intSonicX, intSonicY);
   }
   else {
-    image(sonic_still[(frameCount/10)%intSonic_still], intSonicX, intSonicY);
+    Sonicfall = loadImage("Sonicfall.png");
+    Sonicfall.resize(30, 40);
+    image(Sonicfall, intSonicX, intSonicY);
+    //image(sonic_still[(frameCount/10)%intSonic_still], intSonicX, intSonicY);
   }
    
  }
 
 public void keyPressed() {
-if (key == 'd') {
-  dPressed = true;
-}
+  if (key == 'd') {
+    dPressed = true;
+  }
 
-if (key == 'a') {
-  aPressed = true;
-}
+  if (key == 'a') {
+    aPressed = true;
+  }
 }
 
 public void keyReleased() {
@@ -122,6 +120,5 @@ public void keyReleased() {
   if (key == 'a') {
     aPressed = false;
   }
-
 }
 }
