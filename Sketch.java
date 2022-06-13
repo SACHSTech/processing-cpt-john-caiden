@@ -39,8 +39,8 @@ boolean aPressed = false;
  float groundY8 = 135;
 
  // player coordinates and hitbox
- float playerX = 140;
- float playerY = 100;
+ float playerX = 10;
+ float playerY = 458;
  float playerWidth = 20;
  float playerHeight = 20;
  float playerSpeedX = 3;
@@ -147,38 +147,12 @@ boolean aPressed = false;
   image(img, 0, 0);
   img.resize(700, 700);
 
-  //draw the ground
-  stroke(255);
-  line(0, groundY, width, groundY);
 
-  // draw first platform
-  line(0, groundY1, 180, groundY1);
-
-  // draw second platform
-  line(270, groundY2, 535, groundY2);
-
-  // draw third platform
-  line(535, groundY3, 620, groundY3);
-
-  // draw fourth platform
-  line(102, groundY4, 233, groundY4);
-
-  //draw fifth platform
-  line(268, groundY5, 354, groundY5);
-
-  //draw sixth platform
-  line(396, groundY6, 480, groundY6);
-
-  //draw seventh platform
-  line(568, groundY7, 700, groundY7);
-
-  // draw eighth platform
-  // changed groundY7 value to 134 because background platform is slanted
-  line(0, groundY8, 176, 134);
 
   // player always has a downward force acting upon them
   playerY += playerSpeedY;
 
+ 
   // if the player is above the ground
   if (playerY + playerHeight > groundY) {
 
@@ -236,7 +210,7 @@ boolean aPressed = false;
     jumping = false;
   }
 
-  else if (playerY + playerHeight > groundY6 && playerY + playerHeight < 190 && playerX > 396 && playerX < 480) {
+  else if (playerY + playerHeight > groundY6 && playerY + playerHeight < 190 && playerX > 360 && playerX < 480) {
     playerY = groundY6 - playerHeight;
 
     playerSpeedY = 0;
