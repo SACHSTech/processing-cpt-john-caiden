@@ -148,7 +148,7 @@ boolean aPressed = false;
   img.resize(700, 700);
 
   //draw the ground
-  stroke(255);
+  stroke(119, 198, 110);
   line(0, groundY, width, groundY);
 
   // draw first platform
@@ -263,17 +263,20 @@ boolean aPressed = false;
     playerSpeedY ++;
   }
 
-    //draw the player rectangle
+    //draw the player if they are not running or jumping
     if (leftPressed == false && rightPressed == false && jumping == false){
       image(sonic_still[(frameCount/10)%intSonic_still], playerX, playerY - playerHeight);
     }
+    // draw player if they are jumping
     else if (leftPressed == false && rightPressed == false) {
       Sonicfall = loadImage("Sonicfall.png");
       Sonicfall.resize(30, 40);
       image(Sonicfall, playerX, playerY - playerHeight);
     }
 
+    // left movement
     if (leftPressed){
+      // draw player if they are moving left
       image(sonic_left[(frameCount/3)%intSonic_left], playerX, playerY - playerHeight);
       if (playerX < 0) {
         playerX -= 0;
@@ -289,7 +292,9 @@ boolean aPressed = false;
       }
     }
 
+    // right movement
     if (rightPressed){
+      // draw player if they are movign right
       image(sonic_right[(frameCount/3)%intSonic_right], playerX, playerY - playerHeight);
       if (playerX > 675) {
         playerX += 0;
