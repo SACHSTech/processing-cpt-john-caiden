@@ -2,49 +2,56 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Sketch extends PApplet {
-// Importing Images
-PImage Sonicfall;
+  // Importing Images
+  PImage Sonicfall;
 
-PImage sonic_spritesheet;
+  PImage sonic_spritesheet;
 
-PImage sonic_rightsheet;
-PImage sonic_leftsheet;
-PImage sonic_stillsheet;
+  PImage sonic_rightsheet;
+  PImage sonic_leftsheet;
+  PImage sonic_stillsheet;
 
-PImage[] sonic_right;
-PImage[] sonic_left;
-PImage[] sonic_still;
+  PImage[] sonic_right;
+  PImage[] sonic_left;
+  PImage[] sonic_still;
 
-// Declaring Variables
-int intSonic_right = 8;
-int intSonic_left = 8;
-int intSonic_still = 3;
-int intSonic_frameWidth = 40;
-int intSonic_frameHeight = 40;
-boolean dPressed = false;
-boolean aPressed = false;
-  
- // background image variable
- PImage img;
+  // Declaring Variables
 
- // platform hitboxes
- float groundY = 700;
- float groundY1 = 580;
- float groundY2 = 520;
- float groundY3 = 580;
- float groundY4 = 365;
- float groundY5 = 238;
- float groundY6 = 164;
- float groundY7 = 139;
- float groundY8 = 135;
+  // Game & menu started variables
+  boolean blnGameStarted;
+  boolean blnMenuStarted;
 
- // player coordinates and hitbox
- float playerX = 10;
- float playerY = 458;
- float playerWidth = 20;
- float playerHeight = 20;
- float playerSpeedX = 3;
- float playerSpeedY;
+  // Sonic location and movement variables
+  int intSonic_right = 8;
+  int intSonic_left = 8;
+  int intSonic_still = 3;
+  int intSonic_frameWidth = 40;
+  int intSonic_frameHeight = 40;
+  boolean dPressed = false;
+  boolean aPressed = false;
+    
+  // background image variable
+  PImage img;
+  PImage spikes;
+
+  // platform hitboxes
+  float groundY = 700;
+  float groundY1 = 580;
+  float groundY2 = 520;
+  float groundY3 = 580;
+  float groundY4 = 365;
+  float groundY5 = 238;
+  float groundY6 = 164;
+  float groundY7 = 139;
+  float groundY8 = 135;
+
+  // player coordinates and hitbox
+  float playerX = 10;
+  float playerY = 458;
+  float playerWidth = 20;
+  float playerHeight = 20;
+  float playerSpeedX = 3;
+  float playerSpeedY;
  
  // boolean to check when the player is jumping
  boolean jumping = false;
@@ -69,6 +76,7 @@ boolean aPressed = false;
   public void setup() {
     background(0);
     img = loadImage("Preview2_0.jpg");
+    spikes = loadImage("spikes.png");
 
     // load sonic standing still spritesheet
     sonic_spritesheet = loadImage("Sonicsheet right.png");
@@ -99,6 +107,7 @@ boolean aPressed = false;
     for(int frameNum = 0; frameNum < intSonic_still; frameNum++) {
       sonic_still[frameNum] = sonic_stillsheet.get(intSonic_frameWidth*frameNum, 0, intSonic_frameWidth, intSonic_frameHeight);
     }
+
   }
 
   public void keyPressed() {
@@ -147,17 +156,11 @@ boolean aPressed = false;
   image(img, 0, 0);
   img.resize(700, 700);
 
-<<<<<<< HEAD
-  //draw the ground
-  stroke(119, 198, 110);
-  line(0, groundY, width, groundY);
-=======
->>>>>>> b12728900ae205cdf089d43d77392b1d896c83e7
-
+  image(spikes, 540, 564);
+  spikes.resize(80, 20);
 
   // player always has a downward force acting upon them
   playerY += playerSpeedY;
-
  
   // if the player is above the ground
   if (playerY + playerHeight > groundY) {
