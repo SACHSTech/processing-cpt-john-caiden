@@ -125,9 +125,6 @@ public class Sketch1 extends PApplet {
     }
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
   public void draw() {
   
         // load background
@@ -137,7 +134,8 @@ public class Sketch1 extends PApplet {
         image(spikes, 540, 564);
         spikes.resize(80, 20);
   
-       if (fltPlayerY + fltPlayerHeight > fltGroundY5 && fltPlayerY + fltPlayerHeight < 260 && fltPlayerX > 243 && fltPlayerX < 354) {
+       // Barriers for ground
+        if (fltPlayerY + fltPlayerHeight > fltGroundY5 && fltPlayerY + fltPlayerHeight < 260 && fltPlayerX > 243 && fltPlayerX < 354) {
           fltPlayerY = fltGroundY5 - fltPlayerHeight;
   
           fltPlayerSpeedY = 0;
@@ -167,7 +165,7 @@ public class Sketch1 extends PApplet {
           blnJumping = false;
         }
 
-        // draw player if they are jumping
+        // draw sonic falling if they are jumping
         if (blnLeftPressed == false && blnRightPressed == false) {
           Sonicfall = loadImage("Sonicfall.png");
           Sonicfall.resize(30, 40);
