@@ -2,35 +2,70 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Sketch2 extends PApplet {
-	
- // background image variable
- PImage img;
+  // Importing Images
+  PImage Sonicfall;
 
- // platform hitboxes
- float groundY = 700;
- float groundY1 = 580;
- float groundY2 = 520;
- float groundY3 = 580;
- float groundY4 = 365;
- float groundY5 = 238;
- float groundY6 = 164;
- float groundY7 = 139;
- float groundY8 = 135;
+  PImage sonic_spritesheet;
+  PImage sonic_rightsheet;
+  PImage sonic_leftsheet;
+  PImage sonic_stillsheet;
 
- // player coordinates and hitbox
- float playerX = 140;
- float playerY = 100;
- float playerWidth = 20;
- float playerHeight = 20;
- float playerSpeedX = 3;
- float playerSpeedY;
+  // declarig array
+  PImage[] sonic_right;
+  PImage[] sonic_left;
+  PImage[] sonic_still;
+
+  // Declaring Variables
+
+  // Game & menu started variables
+  boolean blnGameStarted = true;
+  boolean blnControlsStarted = true;
+  boolean blnHowToPlay = true;
+  boolean blnAlive = true;
+  boolean blnWin = false;
+
+  // Sonic location and movement variables
+  int intSonic_right = 8;
+  int intSonic_left = 8;
+  int intSonic_still = 3;
+  int intSonic_frameWidth = 40;
+  int intSonic_frameHeight = 40;
+    
+  // background image variable
+  PImage img;
+  PImage spikes;
+  PImage startGame;
+  PImage controls;
+  PImage howToPlay;
+  PImage youDied;
+  PImage youWin;
+
+  // platform hitboxes
+  float fltGroundY = 700;
+  float fltGroundY1 = 580;
+  float fltGroundY2 = 520;
+  float fltGroundY3 = 600;
+  float fltGroundY4 = 365;
+  float fltGroundY5 = 238;
+  float fltGroundY6 = 164;
+  float fltGroundY7 = 139;
+  float fltGroundY8 = 135;
+
+  // player coordinates and hitbox
+  float fltPlayerX = 10;
+  float fltPlayerY = 458;
+  float fltPlayerWidth = 20;
+  float fltPlayerHeight = 20;
+  float fltPlayerSpeedX = 3;
+  float fltPlayerSpeedY;
  
- // boolean to check when the player is jumping
- boolean jumping = false;
- 
- // boolean which allows horizontal movement
- boolean leftPressed = false;
- boolean rightPressed = false;  
+  // boolean to check when the player is jumping
+  boolean blnJumping = false;
+  
+  // booleans which allows movement
+  boolean blnLeftPressed = false;
+  boolean blnRightPressed = false;  
+  boolean blnUpPressed = false;
 
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -46,37 +81,56 @@ public class Sketch2 extends PApplet {
    */
   public void setup() {
     background(0);
-    img = loadImage("Preview2_0.jpg");
+    startGame = loadImage("startGame.png");
+    controls = loadImage("controls.png");
+    howToPlay = loadImage("howToPlay.png");
+    youDied = loadImage("youDied.png");
+    youWin = loadImage("youWin.jpg");
+
+    // load sonic standing still spritesheet
+    sonic_spritesheet = loadImage("Sonicsheet right.png");
+    sonic_stillsheet = sonic_spritesheet.get(222, 816, intSonic_frameWidth*intSonic_right, intSonic_frameHeight);
+
+    // load sonic runnning right spritesheet
+    sonic_spritesheet = loadImage("Sonicsheet right.png");
+    sonic_rightsheet = sonic_spritesheet.get(2,267, intSonic_frameWidth*intSonic_right, intSonic_frameHeight);
+
+    // load the sonic running right from the spritesheet
+    sonic_right = new PImage[intSonic_right];
+    for(int frameNum = 0; frameNum < intSonic_right; frameNum++ ){
+      sonic_right[frameNum] = sonic_rightsheet.get(intSonic_frameWidth*frameNum, 0, intSonic_frameWidth, intSonic_frameHeight);
+    }
+
+    // load the sonic standing still from the spritesheet
+    sonic_still = new PImage[intSonic_still];
+    for(int frameNum = 0; frameNum < intSonic_still; frameNum++) {
+      sonic_still[frameNum] = sonic_stillsheet.get(intSonic_frameWidth*frameNum, 0, intSonic_frameWidth, intSonic_frameHeight);
+    }
+
   }
 
   public void keyPressed() {
-    // allow player to jump
-    if(key == 'w') {
-      if (!jumping) {
-      
-        //going up
-        playerSpeedY = -18;
-        
-        //disallow jumping while already jumping
-        jumping = true;
-      }
-    }
 
     // allow for horizontal player movement
-    else if (key == 'a') {
-      leftPressed = true;
+    if (key == 'd') {
+      blnRightPressed = true;
     }
-    else if (key == 'd') {
-      rightPressed = true;
+
+    // pregame screens
+    else if (key == 'z') {
+      blnGameStarted = false;
+    }
+    else if (key == 'x') {
+      blnControlsStarted = false;
+    }
+    else if (key == 'c') {
+      blnHowToPlay = false;
     }
   }
   
   public void keyReleased() {
-    if (key == 'a') {
-      leftPressed = false;
-    }
     if (key == 'd') {
-      rightPressed = false;
+      blnRightPressed = false;
     }
   }
 
@@ -84,157 +138,104 @@ public class Sketch2 extends PApplet {
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-    
-  // load background
-  image(img, 0, 0);
-  img.resize(700, 700);
-
-  //draw the ground
-  stroke(255);
-  line(0, groundY, width, groundY);
-
-  // draw first platform
-  line(0, groundY1, 180, groundY1);
-
-  // draw second platform
-  line(270, groundY2, 535, groundY2);
-
-  // draw third platform
-  line(535, groundY3, 620, groundY3);
-
-  // draw fourth platform
-  line(102, groundY4, 233, groundY4);
-
-  //draw fifth platform
-  line(268, groundY5, 354, groundY5);
-
-  //draw sixth platform
-  line(396, groundY6, 480, groundY6);
-
-  //draw seventh platform
-  line(568, groundY7, 700, groundY7);
-
-  // draw eighth platform
-  // changed groundY7 value to 134 because background platform is slanted
-  line(0, groundY8, 176, 134);
-
-  // player always has a downward force acting upon them
-  playerY += playerSpeedY;
-
-  // if the player is above the ground
-  if (playerY + playerHeight > groundY) {
-
-    //snap the player's bottom to the ground's position
-    playerY = groundY - playerHeight;
-
-    //stop the player falling
-    playerSpeedY = 0;
-
-    //allow jumping again
-    jumping = false;
-  }
-  else if (playerY + playerHeight > groundY1 && playerX < 170) {
-    //snap the player's bottom to the ground's position
-    playerY = groundY1 - playerHeight;
-
-    //stop the player falling
-    playerSpeedY = 0;
-    
-    //allow jumping again
-    jumping = false;
-  }
-  else if (playerY + playerHeight > groundY2 && playerX > 260 && playerX < 525){
-    //snap the player's bottom to the ground's position
-    playerY = groundY2 - playerHeight;
-
-    //stop the player falling
-    playerSpeedY = 0;
-    
-    //allow jumping again
-    jumping = false;
-  }
-  else if (playerY + playerHeight > groundY3 && playerY + playerHeight < 600 && playerX > 526 && playerX < 610){
-    //snap the player's bottom to the ground's position
-    playerY = groundY3 - playerHeight;
-
-    //stop the player falling
-    playerSpeedY = 0;
-    
-    //allow jumping again
-    jumping = false;
-  }
   
-  else if (playerY + playerHeight > groundY4 && playerY + playerHeight < 390 && playerX > 85 && playerX < 233) {
-    playerY = groundY4 - playerHeight;
-
-    playerSpeedY = 0;
-    jumping = false;
-  }
-
-  else if (playerY + playerHeight > groundY5 && playerY + playerHeight < 260 && playerX > 243 && playerX < 354) {
-    playerY = groundY5 - playerHeight;
-
-    playerSpeedY = 0;
-    jumping = false;
-  }
-
-  else if (playerY + playerHeight > groundY6 && playerY + playerHeight < 190 && playerX > 396 && playerX < 480) {
-    playerY = groundY6 - playerHeight;
-
-    playerSpeedY = 0;
-    jumping = false;
-  }
-
-  else if (playerY + playerHeight > groundY7 && playerY + playerHeight < 150 && playerX > 545 && playerX < 700) {
-    playerY = groundY7 - playerHeight;
-
-    playerSpeedY = 0;
-    jumping = false;
-  }
-
-  else if (playerY + playerHeight > groundY8 && playerY + playerHeight < 150 && playerX > 0 && playerX < 176) {
-    playerY = groundY8 - playerHeight;
-
-    playerSpeedY = 0;
-    jumping = false;
-  }
-
-  //player is not colliding with the ground
-  else {
-    //gravity accelerates the movement speed
-    playerSpeedY ++;
-  }
-
-    //draw the player rectangle
-    fill(0, 0, 255);
-    rect(playerX, playerY, playerWidth, playerHeight);
-
-    if (leftPressed){
-      if (playerX < 0) {
-        playerX -= 0;
+    if (!blnWin){
+      if (blnGameStarted) {
+        startGame.resize(700, 700);
+        image(startGame, 0, 0);
       }
-      else if (playerX < 180 && playerY > groundY1) {
-        playerX -= 0;
+      else if (blnControlsStarted) {
+        controls.resize(700, 700);
+        image(controls, 0, 0);
       }
-      else if (playerX < 545 && playerX > 270 && playerY > groundY2) {
-        playerX -= 0;
+      else if (blnHowToPlay) {
+        howToPlay.resize(700, 700);
+        image(howToPlay, 0, 0);
+      }
+      else if (blnAlive) {
+  
+        // player always has a downward force acting upon them
+        fltPlayerY += fltPlayerSpeedY;
+  
+        // if the player is above the ground
+        if (fltPlayerY + fltPlayerHeight > fltGroundY) {
+  
+          //snap the player's bottom to the ground's position
+          fltPlayerY = fltGroundY - fltPlayerHeight;
+  
+          //stop the player falling
+          fltPlayerSpeedY = 0;
+  
+          //allow jumping again
+          blnJumping = false;
+        }
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY1 && fltPlayerX < 170) {
+          //snap the player's bottom to the ground's position
+          fltPlayerY = fltGroundY1 - fltPlayerHeight;
+  
+          //stop the player falling
+          fltPlayerSpeedY = 0;
+          
+          //allow jumping again
+          blnJumping = false;
+        }
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY2 && fltPlayerX > 260 && fltPlayerX < 525){
+          //snap the player's bottom to the ground's position
+          fltPlayerY = fltGroundY2 - fltPlayerHeight;
+  
+          //stop the player falling
+          fltPlayerSpeedY = 0;
+          
+          //allow jumping again
+          blnJumping = false;
+        }
+  
+        else if (fltPlayerY > fltGroundY3) {
+          blnAlive = false;
+        }
+  
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY4 && fltPlayerY + fltPlayerHeight < 390 && fltPlayerX > 85 && fltPlayerX < 233) {
+          fltPlayerY = fltGroundY4 - fltPlayerHeight;
+  
+          fltPlayerSpeedY = 0;
+          blnJumping = false;
+        }
+  
+  
+        //player is not colliding with the ground
+        else {
+          //gravity accelerates the movement speed
+          fltPlayerSpeedY ++;
+        }
+  
+        //draw the player if they are not running or jumping
+        if (blnLeftPressed == false && blnRightPressed == false && blnJumping == false){
+          image(sonic_still[(frameCount/10)%intSonic_still], fltPlayerX, fltPlayerY - fltPlayerHeight);
+        }
+  
+        // right movement
+        if (blnRightPressed){
+          // draw player if they are movign right
+          image(sonic_right[(frameCount/3)%intSonic_right], fltPlayerX, fltPlayerY - fltPlayerHeight);
+          if (fltPlayerX > 675) {
+            fltPlayerX += 0;
+          }
+          else if (fltPlayerX + fltPlayerWidth > 250 && fltPlayerX < 535 && fltPlayerY > fltGroundY2) {
+            fltPlayerX += 0;
+          }
+          else {
+            fltPlayerX += fltPlayerSpeedX;
+          }
+        }
       }
       else {
-        playerX -= playerSpeedX;
+      youDied.resize(700, 700);
+      image(youDied, 0, 0);
       }
     }
-
-    if (rightPressed){
-      if (playerX > 675) {
-        playerX += 0;
-      }
-      else if (playerX > 250 && playerX < 535 && playerY > groundY2) {
-        playerX += 0;
-      }
-      else {
-        playerX += playerSpeedX;
-      }
+    else {
+      youWin.resize(700, 700);
+      image(youWin, 0, 0);
     }
   }
-
 }

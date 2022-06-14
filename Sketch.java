@@ -6,11 +6,11 @@ public class Sketch extends PApplet {
   PImage Sonicfall;
 
   PImage sonic_spritesheet;
-
   PImage sonic_rightsheet;
   PImage sonic_leftsheet;
   PImage sonic_stillsheet;
 
+  // declarig array
   PImage[] sonic_right;
   PImage[] sonic_left;
   PImage[] sonic_still;
