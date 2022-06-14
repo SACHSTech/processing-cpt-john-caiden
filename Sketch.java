@@ -3,21 +3,33 @@ import processing.core.PImage;
 
 public class Sketch extends PApplet {
   // Importing Images
+  // Sonic jumping/falling image
   PImage Sonicfall;
 
+  // Sonic movement images
   PImage sonic_spritesheet;
   PImage sonic_rightsheet;
   PImage sonic_leftsheet;
   PImage sonic_stillsheet;
+     
+  // background image variables
+  PImage img;
+  PImage spikes;
 
-  // declarig array
+  // pregame and postgame images
+  PImage startGame;
+  PImage controls;
+  PImage howToPlay;
+  PImage youDied;
+  PImage youWin;
+
+  // declaring arrays
   PImage[] sonic_right;
   PImage[] sonic_left;
   PImage[] sonic_still;
 
   // Declaring Variables
-
-  // Game & menu started variables
+  // pregame and postgame started variables
   boolean blnGameStarted = true;
   boolean blnControlsStarted = true;
   boolean blnHowToPlay = true;
@@ -30,15 +42,6 @@ public class Sketch extends PApplet {
   int intSonic_still = 3;
   int intSonic_frameWidth = 40;
   int intSonic_frameHeight = 40;
-    
-  // background image variable
-  PImage img;
-  PImage spikes;
-  PImage startGame;
-  PImage controls;
-  PImage howToPlay;
-  PImage youDied;
-  PImage youWin;
 
   // platform hitboxes
   float fltGroundY = 700;
@@ -81,6 +84,7 @@ public class Sketch extends PApplet {
    */
   public void setup() {
     background(0);
+    // load pregame, postgame, and background images
     img = loadImage("Preview2_0.jpg");
     spikes = loadImage("spikes.png");
     startGame = loadImage("startGame.png");
@@ -146,7 +150,7 @@ public class Sketch extends PApplet {
       blnRightPressed = true;
     }
 
-    // pregame screens
+    // allow user to continue from pregame screens
     else if (key == 'z') {
       blnGameStarted = false;
     }
@@ -172,19 +176,28 @@ public class Sketch extends PApplet {
    */
   public void draw() {
   
+    // check to see if the player has won the game yet
     if (!blnWin){
+
+      // check to see if the player has clicked past the starting screen
       if (blnGameStarted) {
         startGame.resize(700, 700);
         image(startGame, 0, 0);
       }
+
+      // check to see if the player has clicked past the controls screen
       else if (blnControlsStarted) {
         controls.resize(700, 700);
         image(controls, 0, 0);
       }
+
+      // check to see if the player has clicked past the how to play screen
       else if (blnHowToPlay) {
         howToPlay.resize(700, 700);
         image(howToPlay, 0, 0);
       }
+
+      // check to see if the player has died yet
       else if (blnAlive) {
         // load background
         image(img, 0, 0);
@@ -208,6 +221,8 @@ public class Sketch extends PApplet {
           //allow jumping again
           blnJumping = false;
         }
+
+        // 1st platform
         else if (fltPlayerY + fltPlayerHeight > fltGroundY1 && fltPlayerX < 170) {
           //snap the player's bottom to the ground's position
           fltPlayerY = fltGroundY1 - fltPlayerHeight;
@@ -218,6 +233,8 @@ public class Sketch extends PApplet {
           //allow jumping again
           blnJumping = false;
         }
+
+        // 2nd platform
         else if (fltPlayerY + fltPlayerHeight > fltGroundY2 && fltPlayerX > 260 && fltPlayerX < 525){
           //snap the player's bottom to the ground's position
           fltPlayerY = fltGroundY2 - fltPlayerHeight;
@@ -229,10 +246,12 @@ public class Sketch extends PApplet {
           blnJumping = false;
         }
   
+        // if the player hits the water, they die
         else if (fltPlayerY > fltGroundY3) {
           blnAlive = false;
         }
   
+        // 3rd platform
         else if (fltPlayerY + fltPlayerHeight > fltGroundY4 && fltPlayerY + fltPlayerHeight < 390 && fltPlayerX > 85 && fltPlayerX < 233) {
           fltPlayerY = fltGroundY4 - fltPlayerHeight;
   
@@ -320,11 +339,15 @@ public class Sketch extends PApplet {
           }
         }
       }
+
+      // let the player know that they have died
       else {
       youDied.resize(700, 700);
       image(youDied, 0, 0);
       }
     }
+
+    // let the player know that they have won
     else {
       youWin.resize(700, 700);
       image(youWin, 0, 0);
