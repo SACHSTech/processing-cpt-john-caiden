@@ -1,6 +1,12 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/*
+ * This program allows the user to run a game in which they must maneuver around a map to reach the end
+ * @author JohnDuarte23
+ * @author CaidenHong
+ */
+
 public class Sketch extends PApplet {
   // Importing Images
   // Sonic jumping/falling image
