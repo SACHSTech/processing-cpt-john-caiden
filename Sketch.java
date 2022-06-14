@@ -18,8 +18,11 @@ public class Sketch extends PApplet {
   // Declaring Variables
 
   // Game & menu started variables
-  boolean blnGameStarted;
-  boolean blnMenuStarted;
+  boolean blnGameStarted = true;
+  boolean blnControlsStarted = true;
+  boolean blnHowToPlay = true;
+  boolean blnAlive = true;
+  boolean blnWin = false;
 
   // Sonic location and movement variables
   int intSonic_right = 8;
@@ -31,12 +34,17 @@ public class Sketch extends PApplet {
   // background image variable
   PImage img;
   PImage spikes;
+  PImage startGame;
+  PImage controls;
+  PImage howToPlay;
+  PImage youDied;
+  PImage youWin;
 
   // platform hitboxes
   float fltGroundY = 700;
   float fltGroundY1 = 580;
   float fltGroundY2 = 520;
-  float fltGroundY3 = 580;
+  float fltGroundY3 = 600;
   float fltGroundY4 = 365;
   float fltGroundY5 = 238;
   float fltGroundY6 = 164;
@@ -51,13 +59,13 @@ public class Sketch extends PApplet {
   float fltPlayerSpeedX = 3;
   float fltPlayerSpeedY;
  
- // boolean to check when the player is jumping
- boolean blnJumping = false;
- 
- // boolean which allows horizontal movement
- boolean blnLeftPressed = false;
- boolean blnRightPressed = false;  
- boolean blnUpPressed = false;
+  // boolean to check when the player is jumping
+  boolean blnJumping = false;
+  
+  // booleans which allows movement
+  boolean blnLeftPressed = false;
+  boolean blnRightPressed = false;  
+  boolean blnUpPressed = false;
 
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -75,6 +83,11 @@ public class Sketch extends PApplet {
     background(0);
     img = loadImage("Preview2_0.jpg");
     spikes = loadImage("spikes.png");
+    startGame = loadImage("startGame.png");
+    controls = loadImage("controls.png");
+    howToPlay = loadImage("howToPlay.png");
+    youDied = loadImage("youDied.png");
+    youWin = loadImage("youWin.jpg");
 
     // load sonic standing still spritesheet
     sonic_spritesheet = loadImage("Sonicsheet right.png");
@@ -123,8 +136,6 @@ public class Sketch extends PApplet {
         Sonicfall.resize(30, 40);
         image(Sonicfall, fltPlayerX, fltPlayerY);
       }
-      else{
-      }
     }
 
     // allow for horizontal player movement
@@ -133,6 +144,17 @@ public class Sketch extends PApplet {
     }
     else if (key == 'd') {
       blnRightPressed = true;
+    }
+
+    // pregame screens
+    else if (key == 'z') {
+      blnGameStarted = false;
+    }
+    else if (key == 'x') {
+      blnControlsStarted = false;
+    }
+    else if (key == 'c') {
+      blnHowToPlay = false;
     }
   }
   
@@ -149,144 +171,163 @@ public class Sketch extends PApplet {
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-    
-  // load background
-  image(img, 0, 0);
-  img.resize(700, 700);
-
-  image(spikes, 540, 564);
-  spikes.resize(80, 20);
-
-  // player always has a downward force acting upon them
-  fltPlayerY += fltPlayerSpeedY;
- 
-  // if the player is above the ground
-  if (fltPlayerY + fltPlayerHeight > fltGroundY) {
-
-    //snap the player's bottom to the ground's position
-    fltPlayerY = fltGroundY - fltPlayerHeight;
-
-    //stop the player falling
-    fltPlayerSpeedY = 0;
-
-    //allow jumping again
-    blnJumping = false;
-  }
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY1 && fltPlayerX < 170) {
-    //snap the player's bottom to the ground's position
-    fltPlayerY = fltGroundY1 - fltPlayerHeight;
-
-    //stop the player falling
-    fltPlayerSpeedY = 0;
-    
-    //allow jumping again
-    blnJumping = false;
-  }
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY2 && fltPlayerX > 260 && fltPlayerX < 525){
-    //snap the player's bottom to the ground's position
-    fltPlayerY = fltGroundY2 - fltPlayerHeight;
-
-    //stop the player falling
-    fltPlayerSpeedY = 0;
-    
-    //allow jumping again
-    blnJumping = false;
-  }
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY3 && fltPlayerY + fltPlayerHeight < 600 && fltPlayerX > 526 && fltPlayerX < 610){
-    //snap the player's bottom to the ground's position
-    fltPlayerY = fltGroundY3 - fltPlayerHeight;
-
-    //stop the player falling
-    fltPlayerSpeedY = 0;
-    
-    //allow jumping again
-    blnJumping = false;
-  }
   
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY4 && fltPlayerY + fltPlayerHeight < 390 && fltPlayerX > 85 && fltPlayerX < 233) {
-    fltPlayerY = fltGroundY4 - fltPlayerHeight;
-
-    fltPlayerSpeedY = 0;
-    blnJumping = false;
-  }
-
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY5 && fltPlayerY + fltPlayerHeight < 260 && fltPlayerX > 243 && fltPlayerX < 354) {
-    fltPlayerY = fltGroundY5 - fltPlayerHeight;
-
-    fltPlayerSpeedY = 0;
-    blnJumping = false;
-  }
-
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY6 && fltPlayerY + fltPlayerHeight < 190 && fltPlayerX > 360 && fltPlayerX < 480) {
-    fltPlayerY = fltGroundY6 - fltPlayerHeight;
-
-    fltPlayerSpeedY = 0;
-    blnJumping = false;
-  }
-
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY7 && fltPlayerY + fltPlayerHeight < 150 && fltPlayerX > 545 && fltPlayerX < 700) {
-    fltPlayerY = fltGroundY7 - fltPlayerHeight;
-
-    fltPlayerSpeedY = 0;
-    blnJumping = false;
-  }
-
-  else if (fltPlayerY + fltPlayerHeight > fltGroundY8 && fltPlayerY + fltPlayerHeight < 150 && fltPlayerX > 0 && fltPlayerX < 176) {
-    fltPlayerY = fltGroundY8 - fltPlayerHeight;
-
-    fltPlayerSpeedY = 0;
-    blnJumping = false;
-  }
-
-  //player is not colliding with the ground
-  else {
-    //gravity accelerates the movement speed
-    fltPlayerSpeedY ++;
-  }
-
-    //draw the player if they are not running or jumping
-    if (blnLeftPressed == false && blnRightPressed == false && blnJumping == false){
-      image(sonic_still[(frameCount/10)%intSonic_still], fltPlayerX, fltPlayerY - fltPlayerHeight);
-    }
-    // draw player if they are jumping
-    else if (blnLeftPressed == false && blnRightPressed == false) {
-      Sonicfall = loadImage("Sonicfall.png");
-      Sonicfall.resize(30, 40);
-      image(Sonicfall, fltPlayerX, fltPlayerY - fltPlayerHeight);
-    }
-
-    // left movement
-    if (blnLeftPressed){
-      // draw player if they are moving left
-      image(sonic_left[(frameCount/3)%intSonic_left], fltPlayerX, fltPlayerY - fltPlayerHeight);
-      if (fltPlayerX < 0) {
-        fltPlayerX -= 0;
+    if (!blnWin){
+      if (blnGameStarted) {
+        startGame.resize(700, 700);
+        image(startGame, 0, 0);
       }
-      else if (fltPlayerX < 180 && fltPlayerY > fltGroundY1) {
-        fltPlayerX -= 0;
+      else if (blnControlsStarted) {
+        controls.resize(700, 700);
+        image(controls, 0, 0);
       }
-      else if (fltPlayerX < 545 && fltPlayerX > 270 && fltPlayerY > fltGroundY2) {
-        fltPlayerX -= 0;
+      else if (blnHowToPlay) {
+        howToPlay.resize(700, 700);
+        image(howToPlay, 0, 0);
+      }
+      else if (blnAlive) {
+        // load background
+        image(img, 0, 0);
+        img.resize(700, 700);
+  
+        image(spikes, 540, 564);
+        spikes.resize(80, 20);
+  
+        // player always has a downward force acting upon them
+        fltPlayerY += fltPlayerSpeedY;
+  
+        // if the player is above the ground
+        if (fltPlayerY + fltPlayerHeight > fltGroundY) {
+  
+          //snap the player's bottom to the ground's position
+          fltPlayerY = fltGroundY - fltPlayerHeight;
+  
+          //stop the player falling
+          fltPlayerSpeedY = 0;
+  
+          //allow jumping again
+          blnJumping = false;
+        }
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY1 && fltPlayerX < 170) {
+          //snap the player's bottom to the ground's position
+          fltPlayerY = fltGroundY1 - fltPlayerHeight;
+  
+          //stop the player falling
+          fltPlayerSpeedY = 0;
+          
+          //allow jumping again
+          blnJumping = false;
+        }
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY2 && fltPlayerX > 260 && fltPlayerX < 525){
+          //snap the player's bottom to the ground's position
+          fltPlayerY = fltGroundY2 - fltPlayerHeight;
+  
+          //stop the player falling
+          fltPlayerSpeedY = 0;
+          
+          //allow jumping again
+          blnJumping = false;
+        }
+  
+        else if (fltPlayerY > fltGroundY3) {
+          blnAlive = false;
+        }
+  
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY4 && fltPlayerY + fltPlayerHeight < 390 && fltPlayerX > 85 && fltPlayerX < 233) {
+          fltPlayerY = fltGroundY4 - fltPlayerHeight;
+  
+          fltPlayerSpeedY = 0;
+          blnJumping = false;
+        }
+  
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY5 && fltPlayerY + fltPlayerHeight < 260 && fltPlayerX > 243 && fltPlayerX < 354) {
+          fltPlayerY = fltGroundY5 - fltPlayerHeight;
+  
+          fltPlayerSpeedY = 0;
+          blnJumping = false;
+        }
+  
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY6 && fltPlayerY + fltPlayerHeight < 190 && fltPlayerX > 360 && fltPlayerX < 480) {
+          fltPlayerY = fltGroundY6 - fltPlayerHeight;
+  
+          fltPlayerSpeedY = 0;
+          blnJumping = false;
+        }
+  
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY7 && fltPlayerY + fltPlayerHeight < 150 && fltPlayerX > 545 && fltPlayerX < 700) {
+          fltPlayerY = fltGroundY7 - fltPlayerHeight;
+  
+          fltPlayerSpeedY = 0;
+          blnJumping = false;
+
+          blnWin = true;
+        }
+  
+        else if (fltPlayerY + fltPlayerHeight > fltGroundY8 && fltPlayerY + fltPlayerHeight < 150 && fltPlayerX > 0 && fltPlayerX < 176) {
+          fltPlayerY = fltGroundY8 - fltPlayerHeight;
+  
+          fltPlayerSpeedY = 0;
+          blnJumping = false;
+        }
+  
+        //player is not colliding with the ground
+        else {
+          //gravity accelerates the movement speed
+          fltPlayerSpeedY ++;
+        }
+  
+        //draw the player if they are not running or jumping
+        if (blnLeftPressed == false && blnRightPressed == false && blnJumping == false){
+          image(sonic_still[(frameCount/10)%intSonic_still], fltPlayerX, fltPlayerY - fltPlayerHeight);
+        }
+        // draw player if they are jumping
+        else if (blnLeftPressed == false && blnRightPressed == false) {
+          Sonicfall = loadImage("Sonicfall.png");
+          Sonicfall.resize(30, 40);
+          image(Sonicfall, fltPlayerX, fltPlayerY - fltPlayerHeight);
+        }
+  
+        // left movement
+        if (blnLeftPressed){
+          // draw player if they are moving left
+          image(sonic_left[(frameCount/3)%intSonic_left], fltPlayerX, fltPlayerY - fltPlayerHeight);
+          if (fltPlayerX < 0) {
+            fltPlayerX -= 0;
+          }
+          else if (fltPlayerX < 180 && fltPlayerY > fltGroundY1) {
+            fltPlayerX -= 0;
+          }
+          else if (fltPlayerX < 545 && fltPlayerX > 270 && fltPlayerY > fltGroundY2) {
+            fltPlayerX -= 0;
+          }
+          else {
+            fltPlayerX -= fltPlayerSpeedX;
+          }
+        }
+  
+        // right movement
+        if (blnRightPressed){
+          // draw player if they are movign right
+          image(sonic_right[(frameCount/3)%intSonic_right], fltPlayerX, fltPlayerY - fltPlayerHeight);
+          if (fltPlayerX > 675) {
+            fltPlayerX += 0;
+          }
+          else if (fltPlayerX + fltPlayerWidth > 250 && fltPlayerX < 535 && fltPlayerY > fltGroundY2) {
+            fltPlayerX += 0;
+          }
+          else {
+            fltPlayerX += fltPlayerSpeedX;
+          }
+        }
       }
       else {
-        fltPlayerX -= fltPlayerSpeedX;
+      youDied.resize(700, 700);
+      image(youDied, 0, 0);
       }
     }
-
-    // right movement
-    if (blnRightPressed){
-      // draw player if they are movign right
-      image(sonic_right[(frameCount/3)%intSonic_right], fltPlayerX, fltPlayerY - fltPlayerHeight);
-      if (fltPlayerX > 675) {
-        fltPlayerX += 0;
-      }
-      else if (fltPlayerX + fltPlayerWidth > 250 && fltPlayerX < 535 && fltPlayerY > fltGroundY2) {
-        fltPlayerX += 0;
-      }
-      else {
-        fltPlayerX += fltPlayerSpeedX;
-      }
+    else {
+      youWin.resize(700, 700);
+      image(youWin, 0, 0);
     }
   }
-
 }
