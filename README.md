@@ -1,7 +1,5 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7931266&assignment_repo_type=AssignmentRepo)
-# Program Title (edit this)
-
-Put your program description here.
+# Super Sonic Speedrun!
 
     Super Sonic Speedrun is a platform jumping based game where the objective is to reach a certain part of the map. There are obstacles placed in the map that will try to prevent the player from reaching the end point.
     
